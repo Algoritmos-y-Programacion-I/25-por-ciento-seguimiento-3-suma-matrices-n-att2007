@@ -1,44 +1,34 @@
 package model;
 
-import model.SalaCine;
-import model.MatrizNumerica;
-
-
 public class Controller {
-
-    private SalaCine cinemark; // Declarando sala de cine
+    private SalaCine cinemark;
     private MatrizNumerica matriz1;
     private MatrizNumerica matriz2;
 
-    /**
-     * Constructor de la clase Controller para inicializar 
-     *
-     * @pre No se requieren precondiciones específicas.
-     * @post Se crea una instancia de Controller 
-     */
     public Controller() {
-        matriz1 = new MatrizNumerica(2,2);
-        matriz2 = new MatrizNumerica(2,2);
+        matriz1 = new MatrizNumerica(2, 2);
+        matriz2 = new MatrizNumerica(2, 2);
+        inicialiceSala();
     }
 
     public void inicialiceSala() {
-        cinemark = new SalaCine(7,7);
+        cinemark = new SalaCine(7, 7);
     }
 
     public String mostrarSala() {
-        return cinemark.toString();
+        if (cinemark != null) {
+            return cinemark.toString();
+        } else {
+            return "La sala de cine no está inicializada.";
+        }
     }
 
-    public void comprarSilla(int fila, int asientoEnFila) {
-        cinemark.reservarAsiento(fila, asientoEnFila);
+    public String comprarSilla(int fila, int asientoEnFila) {
+        return cinemark.reservarAsiento(fila, asientoEnFila);
     }
 
-    public int cantidadFilas() {
-        return cinemark.retornarCantFilas();
-    }
-
-    public int cantidadColumnas() {
-        return cinemark.retornarCantColumnas();
+    public String liberarSilla(int fila, int asientoEnFila) {
+        return cinemark.liberarAsiento(fila, asientoEnFila);
     }
 
     public MatrizNumerica getMatriz1() {
@@ -48,8 +38,5 @@ public class Controller {
     public MatrizNumerica getMatriz2() {
         return matriz2;
     }
-
-
-
-
 }
+

@@ -1,13 +1,10 @@
 package model;
 
 public class MatrizNumerica {
-
     private int[][] matriz; // Declaro
-    private int cantFilas;
-    private int cantColumnas;
+    private int cantColumnas; // Solo conserva variables que realmente uses
 
     public MatrizNumerica(int filas, int columnas) {
-        cantFilas = filas;
         cantColumnas = columnas;
         this.matriz = new int[filas][columnas]; // Inicializo
     }
@@ -20,5 +17,7 @@ public class MatrizNumerica {
         return matriz;
     }
 
-
+    public int getcantColumnas() {
+        return cantColumnas;
+    }
 }

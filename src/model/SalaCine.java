@@ -1,14 +1,14 @@
 package model;
 
 public class SalaCine {
-    private boolean[][] asientos; // Declaro
+    private boolean[][] asientos;
 
     public SalaCine(int filas, int asientosPorFila) {
-        this.asientos = new boolean[filas][asientosPorFila]; // Inicializo
+        this.asientos = new boolean[filas][asientosPorFila];
         poblarSala();
     }
 
-    private void poblarSala() {
+    public void poblarSala() {
         for (int i = 0; i < asientos.length; i++) {
             for (int j = 0; j < asientos[i].length; j++) {
                 asientos[i][j] = false;
@@ -17,35 +17,42 @@ public class SalaCine {
     }
 
     public String reservarAsiento(int fila, int asiento) {
-        if(!asientos[fila][asiento]) {
+        if (fila < 0 || fila >= asientos.length || asiento < 0 || asiento >= asientos[fila].length) {
+            return "Error: Índices fuera de rango.";
+        }
+
+        if (!asientos[fila][asiento]) {
             asientos[fila][asiento] = true;
-            return "Asiento reservado exitosamente";
+            return "Asiento reservado exitosamente.";
         } else {
-            return "Asiento ya está reservado, no se puede ocupar";
+            return "Asiento ya está reservado.";
         }
     }
 
-    public boolean verificarDisponibilidad(int fila, int asiento) {
-        return !asientos[fila][asiento];
+    public String liberarAsiento(int fila, int asiento) {
+        if (fila < 0 || fila >= asientos.length || asiento < 0 || asiento >= asientos[fila].length) {
+            return "Error: Índices fuera de rango.";
+        }
+
+        if (asientos[fila][asiento]) {
+            asientos[fila][asiento] = false;
+            return "Asiento liberado exitosamente.";
+        } else {
+            return "El asiento ya está disponible.";
+        }
     }
 
     @Override
     public String toString() {
-        String result = "";
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < asientos.length; i++) {
             for (int j = 0; j < asientos[i].length; j++) {
-                result += asientos[i][j] ? "[X]" : "[ ]";
+                sb.append(asientos[i][j] ? "[X]" : "[ ]");
             }
-            result += "\n";
+            sb.append("\n");
         }
-        return result;
-    }
-
-    public int retornarCantFilas() {
-        return asientos.length;
-    }
-
-    public int retornarCantColumnas() {
-        return asientos[0].length;
+        return sb.toString();
     }
 }
+
+

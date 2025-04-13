@@ -1,72 +1,86 @@
 package ui;
 
-import java.util.Scanner; // Importar Scanner
+import java.util.Scanner;
 import model.Controller;
 
-
 public class Executable {
+    private Controller cont; 
+    private Scanner escaner; 
 
-    //private Scanner reader;
-    private Controller cont;
-    private Scanner escaner; // Ponner Scanner como atributo
-
-    /**
-     * Constructor de la clase Executable para inicializar el lector de entrada y el
-     * controlador.
-     *
-     * @pre No se requieren precondiciones específicas.
-     * @post Se crea una instancia de Executable y se inicializan el lector de
-     *       entrada y el controlador.
-     */
     public Executable() {
-        //reader = new Scanner(System.in);
-        cont = new Controller();
-        escaner = new Scanner(System.in); // Inicializar Scanner
+        cont = new Controller(); 
+        escaner = new Scanner(System.in); 
     }
 
-    /**
-     * Ejecuta el programa principal de gestión de colegios.
-     *
-     * @pre El método debe ser llamado dentro de un contexto válido.
-     * @post El programa se ejecuta y permite al usuario interactuar con las
-     *       opciones disponibles.
-     * @return void Este método no retorna ningún valor.
-     */
-
     public void run() {
+        boolean continuar = true;
+        while (continuar) {
+            System.out.println("\nSeleccione una opción:");
+            System.out.println("1. Insertar números en la matriz");
+            System.out.println("2. Ver estado de la sala de cine");
+            System.out.println("3. Reservar un asiento");
+            System.out.println("4. Liberar un asiento");
+            System.out.println("5. Salir");
 
-        System.out.println("Inserte los numeros de la matriz 1: ");
-        for(int i = 0; i < 2; i++) {
-            for(int j = 0; j < 2; j++) {
-                System.out.println("Insertar dato en fila " + i + " y columna " + j + " : ");
-                int valor = escaner.nextInt();
-                escaner.nextLine();
-                cont.getMatriz1().insertarValor(i, j, valor);
+            int opcion = escaner.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    System.out.println("Inserte los números de la matriz 1:");
+                    for (int i = 0; i < 2; i++) {
+                        for (int j = 0; j < 2; j++) {
+                            System.out.print("Dato para fila " + i + " y columna " + j + ": ");
+                            int valor = escaner.nextInt();
+                            cont.getMatriz1().insertarValor(i, j, valor);
+                        }
+                    }
+                    System.out.println("Matriz 1 actualizada:");
+                    imprimirMatriz(cont.getMatriz1().getMatriz());
+                    break;
+
+                case 2:
+                    System.out.println("Estado de la sala de cine:");
+                    System.out.println(cont.mostrarSala());
+                    break;
+
+                case 3:
+                    System.out.print("Ingrese la fila del asiento: ");
+                    int fila = escaner.nextInt();
+                    System.out.print("Ingrese el asiento en la fila: ");
+                    int asiento = escaner.nextInt();
+                    System.out.println(cont.comprarSilla(fila, asiento));
+                    break;
+
+                case 4:
+                    System.out.print("Ingrese la fila del asiento: ");
+                    fila = escaner.nextInt();
+                    System.out.print("Ingrese el asiento en la fila: ");
+                    asiento = escaner.nextInt();
+                    System.out.println(cont.liberarSilla(fila, asiento));
+                    break;
+
+                case 5:
+                    continuar = false;
+                    break;
+
+                default:
+                    System.out.println("Opción no válida.");
             }
         }
-    
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 2; j++) {
-                System.out.print(cont.getMatriz1().getMatriz()[i][j] + " ");
+        escaner.close();
+    }
+
+    private void imprimirMatriz(int[][] matriz) {
+        for (int[] fila : matriz) {
+            for (int elemento : fila) {
+                System.out.print(elemento + " ");
             }
             System.out.println();
         }
-
     }
 
-    /**
-     * Método principal (main) para iniciar la ejecución del programa.
-     *
-     * @pre No se requieren precondiciones específicas.
-     * @post Se crea una instancia de Executable y se ejecuta el programa principal.
-     * @param args Los argumentos de la línea de comandos (no se utilizan en este
-     *             caso).
-     */
     public static void main(String[] args) {
-
         Executable mainApp = new Executable();
         mainApp.run();
-
     }
-
 }
